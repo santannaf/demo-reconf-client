@@ -1,9 +1,11 @@
 package org.example.democlientreconf
 
-import org.blocks4j.reconf.client.proxy.ConfigurationRepositoryFactory
-import org.blocks4j.reconf.client.proxy.Customization
+//import org.blocks4j.reconf.client.proxy.ConfigurationRepositoryFactory
+//import org.blocks4j.reconf.client.proxy.Customization
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import reconf.client.proxy.ConfigurationRepositoryFactory
+import reconf.client.proxy.Customization
 
 @Configuration
 class ReconfParameterImpl {
