@@ -91,3 +91,34 @@ graalvmNative {
 configurations.all {
     exclude(group = "commons-logging", module = "commons-logging")
 }
+
+tasks.register("cleanExportDirs") {
+    group = "build"
+    description = "Remove all export folders from project and subprojects (including root level)"
+
+    doLast {
+        val exportDirs = mutableListOf<File>()
+
+        // Verifica se tem export na raiz
+        val rootExport = File(rootDir, "export")
+        if (rootExport.exists() && rootExport.isDirectory) {
+            exportDirs.add(rootExport)
+        }
+
+        // Procura export nos subdiretórios
+        exportDirs.addAll(
+            fileTree(rootDir) {
+                include("**/export")
+            }.files.filter { it.isDirectory }
+        )
+
+        exportDirs.forEach { dir ->
+            println("Deleting export folder: ${dir.absolutePath}")
+            dir.deleteRecursively()
+        }
+    }
+}
+
+tasks.named("clean") {
+    finalizedBy("cleanExportDirs")
+}
